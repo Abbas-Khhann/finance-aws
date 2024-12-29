@@ -1,0 +1,25 @@
+# Dockerfile for frontend
+
+# Use Node.js image
+FROM node:16
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the package.json and package-lock.json from the finance-app folder
+COPY React/finance-app/package.json React/finance-app/package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the React app code
+COPY React/finance-app/ ./
+
+# Build the React app
+RUN npm run build
+
+# Expose the port for the app (adjust as needed)
+EXPOSE 3000
+
+# Start the React app (optional, if you want to serve the app from Docker)
+CMD ["npm", "start"]
