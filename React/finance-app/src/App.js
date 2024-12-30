@@ -44,9 +44,9 @@ const App = () => {
     <div>
       <nav className='navbar navbar-dark bg-primary'> 
          <div className='container-fluid'>
-         <button className="navbar-brand" onClick={() => {}}>
-        Finance App
-      </button>
+         <button className="btn btn-primary navbar-brand" onClick={() => {}}>
+  Finance App
+</button>
          </div>
       </nav>
 
