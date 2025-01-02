@@ -9,8 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost"
-    "http://localhost:3000",  # For local development
+    
+    "http://localhost:80",  # For local development
     "http://aws-finance-app-env.eba-ijbmy6jm.us-east-1.elasticbeanstalk.com"  # Production domain
 ]
 
@@ -47,7 +47,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 db_models.Base.metadata.create_all(bind=engine)
 
-@app.post("/transactions/", response_model=TransactionModel)
+@app.post("/api/add_transactions/", response_model=TransactionModel)
 async def create_transaction(transaction: TransactionBase, db: db_dependency):
     db_transaction = db_models.Transaction(**transaction.dict())
     db.add(db_transaction)
@@ -55,7 +55,7 @@ async def create_transaction(transaction: TransactionBase, db: db_dependency):
     db.refresh(db_transaction)
     return db_transaction
 
-@app.get("/transactions/", response_model=List[TransactionModel])
+@app.get("/api/get_transactions/", response_model=List[TransactionModel])
 async def read_transactions(db: db_dependency, skip: int = 0, limit: int = 100):
     transactions = db.query(db_models.Transaction).offset(skip).limit(limit).all()
     return transactions
