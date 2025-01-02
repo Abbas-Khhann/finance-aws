@@ -2,17 +2,15 @@ from fastapi import FastAPI, HTTPException, Depends
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from database import SessionLocal, engine
-import db_models
+from fastapi.app.database import SessionLocal, engine
+from fastapi import db_models
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  # For local development
-    "http://aws-finance-app-env.eba-ijbmy6jm.us-east-1.elasticbeanstalk.com"  # Production domain
+    "http://localhost:3000"
 ]
-
 
 app.add_middleware(
     CORSMiddleware,

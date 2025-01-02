@@ -1,7 +1,37 @@
 # Dockerfile for frontend
 
-# Use Node.js image
-FROM node:16
+ # Use Node.js image
+# FROM node:16
+
+
+# # Set the working directory inside the container
+# WORKDIR /app
+
+# # Copy the package.json and package-lock.json from the finance-app folder
+# COPY React/finance-app/package.json React/finance-app/package-lock.json ./
+# COPY React/finance-app/ ./
+# # Install dependencies
+# RUN npm install
+
+# # Copy the rest of the React app code
+# COPY React/finance-app/ ./
+
+# # Build the React app
+# RUN npm run build
+
+
+# # Expose the port for the app (adjust as needed)
+# EXPOSE 3000
+
+# # Start the React app (optional, if you want to serve the app from Docker)
+# CMD ["npm", "start"]
+
+
+
+  # For running on nginx server
+
+# Stage 1: Build the React app
+FROM node:16 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -18,8 +48,15 @@ COPY React/finance-app/ ./
 # Build the React app
 RUN npm run build
 
-# Expose the port for the app (adjust as needed)
-EXPOSE 3000
+# Stage 2: Serve the React app with Nginx
+FROM nginx:alpine
 
-# Start the React app (optional, if you want to serve the app from Docker)
-CMD ["npm", "start"]
+# Copy the built React app from the previous stage to Nginx's default HTML directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose the port for the app
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
+

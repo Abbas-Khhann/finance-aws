@@ -1,12 +1,21 @@
 version: '3.8'
 
+# services:
+#   frontend:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile-frontend
+#     ports:
+#       - "3000:3000"
+
+#  for running on nginx
 services:
   frontend:
     build:
       context: .
       dockerfile: Dockerfile-frontend
     ports:
-      - "3000:3000"
+      - "80:80"  # Map container port 80 to host port 80
 
   backend:
     build:
@@ -14,6 +23,8 @@ services:
       dockerfile: Dockerfile-backend
     ports:
       - "8000:8000"
+    environment:
+      - PORT=8000
     volumes:
       - sqlite_data:/app/db
 
