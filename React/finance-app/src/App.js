@@ -13,7 +13,7 @@ const App = () => {
   });
 
   const fetchTransactions = async () => {
-    const response = await api.get('/transactions/');
+    const response = await api.get('/api/transactions/');
     setTransactions(response.data)
   };
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = () => {
   };
    const handleFormSubmit = async (event) => {
     event.preventDefault();
-    await api.post('/transactions/', formData);
+    await api.post('/api/transactions/', formData);
     fetchTransactions();
     setFormData({
       amount: '',

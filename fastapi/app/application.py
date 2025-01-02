@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
+    "http://localhost"
     "http://localhost:3000",  # For local development
     "http://aws-finance-app-env.eba-ijbmy6jm.us-east-1.elasticbeanstalk.com"  # Production domain
 ]
